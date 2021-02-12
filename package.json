@@ -8,7 +8,8 @@
   "license": "MIT",
   "scripts": {
     "start": "node index.js",
-    "lint": "eslint ."
+    "lint": "eslint '**/*.js'",
+    "fix": "eslint --fix '**/*.js'"
   },
   "dependencies": {
     "express": "^4.17.1"
