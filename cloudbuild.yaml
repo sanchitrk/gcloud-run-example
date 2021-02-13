@@ -21,3 +21,4 @@ steps:
       - '--allow-unauthenticated'
       - '--set-env-vars'
       - 'NAME=SANCHIT'
+      - 'AGE=28'
