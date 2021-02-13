@@ -20,4 +20,4 @@ steps:
       - 'managed'
       - '--allow-unauthenticated'
       - '--set-env-vars'
-      - NAME=${NAME}
+      - 'NAME=SANCHIT'
