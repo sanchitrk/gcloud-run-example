@@ -1,11 +1,13 @@
 steps:
-  - name: 'gcr.io/cloud-builders/gcloud'
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
     args:
       - 'builds'
       - 'submit'
       - '--tag'
       - 'asia-south1-docker.pkg.dev/learning-cloud-build-101/gcloud-run-example-repo/gcloud-run-example-img:latest'
-  - name: 'gcr.io/cloud-builders/gcloud'
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
     args:
       - 'run'
       - 'deploy'
