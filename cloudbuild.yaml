@@ -1,23 +1,37 @@
 steps:
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: 'Build Image'
     entrypoint: gcloud
     args:
       - 'builds'
       - 'submit'
       - '--tag'
-      - 'asia-south1-docker.pkg.dev/learning-cloud-build-101/gcloud-run-example-repo/gcloud-run-example-img:latest'
+      - 'asia-south1-docker.pkg.dev/$PROJECT_ID/gcloud-run-example-repo/gcloud-run-example-img:latest'
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: 'Deploy Image'
     entrypoint: gcloud
     args:
       - 'run'
       - 'deploy'
       - 'gcloud-run-example-service'
       - '--image'
-      - 'asia-south1-docker.pkg.dev/learning-cloud-build-101/gcloud-run-example-repo/gcloud-run-example-img:latest'
+      - 'asia-south1-docker.pkg.dev/$PROJECT_ID/gcloud-run-example-repo/gcloud-run-example-img:latest'
       - '--region'
       - 'asia-south1'
       - '--platform'
       - 'managed'
       - '--allow-unauthenticated'
       - '--set-env-vars'
-      - 'NAME=SANCHIT,AGE=28'
+      - 'REDIS_URL=$$REDIS_URL,REDIS_PASSWD=$$REDIS_PASSWD,AGE=$$AGE'
+    secretEnv:
+      - 'REDIS_URL'
+      - 'REDIS_PASSWD'
+      - 'AGE'
+  - availableSecrets:
+      secretManager:
+      - versionName: 'projects/$PROJECT_ID/secrets/EXAMPLE_REDIS_URL/versions/1'
+      - env: 'REDIS_URL'
+      - versionName: 'projects/$PROJECT_ID/secrets/EXAMPLE_REDIS_PASSWD/versions/1'
+      - env: 'REDIS_PASSWD'
+      - versionName: 'projects/$PROJECT_ID/secrets/EXAMPLE_AGE/versions/1'
+      - env: 'AGE'

@@ -1,6 +1,11 @@
-
 # https://hub.docker.com/_/node
 FROM node:15-slim
+
+# set default environment variables
+ENV NAME John Wick
+ENV AGE 40
+ENV REDIS_URL 127.0.0.1
+ENV REDIS_PASSWD VerySecure
 
 # Create and change to the app directory.
 WORKDIR /usr/src/app
