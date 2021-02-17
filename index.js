@@ -3,11 +3,11 @@ const Redis = require('ioredis');
 
 const app = express();
 
-const NAME = process.env.NAME || 'undefined';
-const AGE = process.env.AGE || 'undefined';
+const { NAME } = process.env;
+const { AGE } = process.env;
 
-const REDIS_URL = process.env.REDIS_URL || '127.0.0.1';
-const REDIS_PASSWD = process.env.REDIS_PASSWD || 'verySecure';
+const { REDIS_URL } = process.env;
+const { REDIS_PASSWD } = process.env;
 
 const redis = new Redis({
   host: REDIS_URL,
@@ -26,6 +26,8 @@ app.get('/', (request, response) => {
       server: res,
       name: NAME,
       age: AGE,
+      redisUrl: REDIS_URL,
+      redisPassword: REDIS_PASSWD,
     });
   }).catch((err) => {
     console.log('err setting up key in redis');
@@ -34,6 +36,8 @@ app.get('/', (request, response) => {
       msg: err.message,
       name: NAME,
       age: AGE,
+      redisUrl: REDIS_URL,
+      redisPassword: REDIS_PASSWD,
     });
   });
 });
