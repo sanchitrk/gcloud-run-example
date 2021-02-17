@@ -1,5 +1,4 @@
 steps:
-
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     id: 'Build Image'
     entrypoint: gcloud
@@ -8,7 +7,6 @@ steps:
       - 'submit'
       - '--tag'
       - 'asia-south1-docker.pkg.dev/$PROJECT_ID/gcloud-run-example-repo/gcloud-run-example-img:latest'
-
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     id: 'Deploy Image'
     entrypoint: gcloud
@@ -24,12 +22,11 @@ steps:
       - 'managed'
       - '--allow-unauthenticated'
       - '--set-env-vars'
-      - 'REDIS_URL=$$REDIS_URL,REDIS_PASSWD=$$REDIS_PASSWD,AGE=$$AGE'
+      - 'REDIS_URL={_REDIS_URL},REDIS_PASSWD={_REDIS_PASSWD},AGE={_AGE}'
     secretEnv:
       - 'REDIS_URL'
       - 'REDIS_PASSWD'
       - 'AGE'
-
 availableSecrets:
   secretManager:
   - versionName: 'projects/learning-cloud-build-101/secrets/EXAMPLE_REDIS_URL/versions/latest'
