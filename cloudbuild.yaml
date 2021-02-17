@@ -50,12 +50,7 @@ steps:
     entrypoint: 'bash'
     args:
       - '-c'
-      - 'gcloud run deploy gcloud-run-example-service \
-        --image asia-south1-docker.pkg.dev/$PROJECT_ID/gcloud-run-example-repo/gcloud-run-example-img:latest \
-        --region asia-south1 \
-        --platform managed \
-        --allow-unauthenticated \
-        --set-env-vars REDIS_URL=$$REDIS_URL,REDIS_PASSWD=$$REDIS_PASSWD,AGE=$$AGE'
+      - 'gcloud run deploy gcloud-run-example-service --image asia-south1-docker.pkg.dev/$PROJECT_ID/gcloud-run-example-repo/gcloud-run-example-img:latest --region asia-south1 --platform managed --allow-unauthenticated --set-env-vars REDIS_URL=$$REDIS_URL,REDIS_PASSWD=$$REDIS_PASSWD,AGE=$$AGE'
     secretEnv: ['REDIS_URL', 'REDIS_PASSWD', 'AGE']
 availableSecrets:
   secretManager:
