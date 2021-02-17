@@ -36,10 +36,26 @@
 #  - versionName: 'projects/learning-cloud-build-101/secrets/EXAMPLE_AGE/versions/latest'
 #    env: 'AGE'
 
+
 steps:
-  - name: 'bash'
-    id: 'Do Bash'
-    args: ['-c', 'echo $$REDIS_URL $$REDIS_PASSWD $$AGE']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: 'Build Image'
+    args:
+      - 'builds'
+      - 'submit'
+      - '--tag'
+      - 'asia-south1-docker.pkg.dev/$PROJECT_ID/gcloud-run-example-repo/gcloud-run-example-img:latest'
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: 'Set Env & Deploy Image'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - 'gcloud run deploy gcloud-run-example-service \
+        --image asia-south1-docker.pkg.dev/$PROJECT_ID/gcloud-run-example-repo/gcloud-run-example-img:latest \
+        --region asia-south1 \
+        --platform managed \
+        --allow-unauthenticated \
+        --set-env-vars REDIS_URL=$$REDIS_URL,REDIS_PASSWD=$$REDIS_PASSWD,AGE=$$AGE'
     secretEnv: ['REDIS_URL', 'REDIS_PASSWD', 'AGE']
 availableSecrets:
   secretManager:
@@ -49,3 +65,17 @@ availableSecrets:
       env: 'REDIS_PASSWD'
     - versionName: 'projects/learning-cloud-build-101/secrets/EXAMPLE_AGE/versions/latest'
       env: 'AGE'
+
+#steps:
+#  - name: 'bash'
+#    id: 'Do Bash'
+#    args: ['-c', 'echo $$REDIS_URL $$REDIS_PASSWD $$AGE']
+#    secretEnv: ['REDIS_URL', 'REDIS_PASSWD', 'AGE']
+#availableSecrets:
+#  secretManager:
+#    - versionName: 'projects/learning-cloud-build-101/secrets/EXAMPLE_REDIS_URL/versions/latest'
+#      env: 'REDIS_URL'
+#    - versionName: 'projects/learning-cloud-build-101/secrets/EXAMPLE_REDIS_PASSWD/versions/latest'
+#      env: 'REDIS_PASSWD'
+#    - versionName: 'projects/learning-cloud-build-101/secrets/EXAMPLE_AGE/versions/latest'
+#      env: 'AGE'
