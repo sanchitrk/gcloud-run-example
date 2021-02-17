@@ -32,9 +32,9 @@ steps:
 
 availableSecrets:
   secretManager:
-  - versionName: 'projects/$PROJECT_ID/secrets/EXAMPLE_REDIS_URL/versions/latest'
+  - versionName: 'projects/learning-cloud-build-101/secrets/EXAMPLE_REDIS_URL/versions/latest'
     env: 'REDIS_URL'
-  - versionName: 'projects/$PROJECT_ID/secrets/EXAMPLE_REDIS_PASSWD/versions/latest'
+  - versionName: 'projects/learning-cloud-build-101/secrets/EXAMPLE_REDIS_PASSWD/versions/latest'
     env: 'REDIS_PASSWD'
-  - versionName: 'projects/$PROJECT_ID/secrets/EXAMPLE_AGE/versions/latest'
+  - versionName: 'projects/learning-cloud-build-101/secrets/EXAMPLE_AGE/versions/latest'
     env: 'AGE'
